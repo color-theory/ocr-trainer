@@ -30,7 +30,7 @@ x_train, x_temp, y_train, y_temp = train_test_split(images, encoded_labels, test
 x_val, x_test, y_val, y_test = train_test_split(x_temp, y_temp, test_size=1/3, random_state=42)
 
 datagen = tf.keras.preprocessing.image.ImageDataGenerator(
-    rotation_range=10,
+    rotation_range=5,
     width_shift_range=0.1,
     height_shift_range=0.1,
     zoom_range=0.1
@@ -42,14 +42,18 @@ model = tf.keras.models.Sequential([
     tf.keras.layers.MaxPooling2D((2, 2)),
     tf.keras.layers.Conv2D(64, (3, 3), activation='relu'),
     tf.keras.layers.MaxPooling2D((2, 2)),
-    tf.keras.layers.Conv2D(64, (3, 3), activation='relu'),
+    tf.keras.layers.Conv2D(128, (3, 3), activation='relu'),
+    tf.keras.layers.MaxPooling2D((2, 2)),
+    tf.keras.layers.Conv2D(128, (3, 3), activation='relu'),
     tf.keras.layers.Flatten(),
     tf.keras.layers.Dense(128, activation='relu'),
     tf.keras.layers.Dense(len(set(labels)), activation='softmax')
 ])
 
-model.compile(optimizer='adam',
+model.compile(optimizer=tf.keras.optimizers.Adam(learning_rate=0.001),
               loss='sparse_categorical_crossentropy',
               metrics=['accuracy'])
 
-model.fit(datagen.flow(x_train, y_train, batch_size=32), epochs=10, validation_data=(x_val, y_val))
+model.fit(datagen.flow(x_train, y_train, batch_size=16), epochs=50, validation_data=(x_val, y_val))
+
+model.save('ocr_character_recognition_model.h5')
