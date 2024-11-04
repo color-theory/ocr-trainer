@@ -3,8 +3,6 @@ import numpy as np
 from sklearn.preprocessing import LabelEncoder
 from sklearn.model_selection import train_test_split
 import tensorflow as tf
-from tensorflow.python.keras import models, layers
-from keras._tf_keras.keras.preprocessing.image import ImageDataGenerator
 
 images = []
 labels = []
@@ -31,7 +29,7 @@ encoded_labels = label_encoder.fit_transform(labels)
 x_train, x_temp, y_train, y_temp = train_test_split(images, encoded_labels, test_size=0.3, random_state=42)
 x_val, x_test, y_val, y_test = train_test_split(x_temp, y_temp, test_size=1/3, random_state=42)
 
-datagen = ImageDataGenerator(
+datagen = tf.keras.preprocessing.image.ImageDataGenerator(
     rotation_range=10,
     width_shift_range=0.1,
     height_shift_range=0.1,
@@ -39,15 +37,15 @@ datagen = ImageDataGenerator(
 )
 datagen.fit(x_train)
 
-model = models.Sequential([
-    layers.Conv2D(32, (3, 3), activation='relu', input_shape=(50, 50, 1)),
-    layers.MaxPooling2D((2, 2)),
-    layers.Conv2D(64, (3, 3), activation='relu'),
-    layers.MaxPooling2D((2, 2)),
-    layers.Conv2D(64, (3, 3), activation='relu'),
-    layers.Flatten(),
-    layers.Dense(128, activation='relu'),
-    layers.Dense(len(set(labels)), activation='softmax')
+model = tf.keras.models.Sequential([
+    tf.keras.layers.Conv2D(32, (3, 3), activation='relu', input_shape=(50, 50, 1)),
+    tf.keras.layers.MaxPooling2D((2, 2)),
+    tf.keras.layers.Conv2D(64, (3, 3), activation='relu'),
+    tf.keras.layers.MaxPooling2D((2, 2)),
+    tf.keras.layers.Conv2D(64, (3, 3), activation='relu'),
+    tf.keras.layers.Flatten(),
+    tf.keras.layers.Dense(128, activation='relu'),
+    tf.keras.layers.Dense(len(set(labels)), activation='softmax')
 ])
 
 model.compile(optimizer='adam',
