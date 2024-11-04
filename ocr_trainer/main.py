@@ -55,5 +55,3 @@ model.compile(optimizer=tf.keras.optimizers.Adam(learning_rate=0.001),
               metrics=['accuracy'])
 
 model.fit(datagen.flow(x_train, y_train, batch_size=16), epochs=50, validation_data=(x_val, y_val))
-
-model.save('ocr_character_recognition_model.h5')
