@@ -2,6 +2,6 @@ venv
 data
 *.h5
 *.keras
-ocr_model
+model_ocr
 web_model
 label_mapping.json

@@ -35,10 +35,10 @@ x_train, x_temp, y_train, y_temp = train_test_split(images, encoded_labels, test
 x_val, x_test, y_val, y_test = train_test_split(x_temp, y_temp, test_size=1/3, random_state=42)
 
 datagen = tf.keras.preprocessing.image.ImageDataGenerator(
-    rotation_range=5,
+    rotation_range=3,
     width_shift_range=0.1,
     height_shift_range=0.1,
-    zoom_range=0.1
+    zoom_range=0.05
 )
 datagen.fit(x_train)
 
@@ -60,3 +60,4 @@ model.compile(optimizer=tf.keras.optimizers.Adam(learning_rate=0.001),
               metrics=['accuracy'])
 
 model.fit(datagen.flow(x_train, y_train, batch_size=16), epochs=50, validation_data=(x_val, y_val))
+model.export('model_ocr')
