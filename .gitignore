@@ -4,3 +4,4 @@ data
 *.keras
 ocr_model
 web_model
+label_mapping.json

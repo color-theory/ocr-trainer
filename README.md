@@ -6,7 +6,8 @@ Train an OCR model with TensorFlow.
 ```
 ocr_trainer> python main.py
 ```
-This will save your model as `ocr_model` in your ocr_trainer directory.
+This will save your model as `ocr_model` in your ocr_trainer directory. 
+It will also save a `label_mapping.json` file for you to use if you wish to associate the predicted indexes with their labels elsewhere.
 
 ## Convert to web model for use with tensorflow.js
 ```

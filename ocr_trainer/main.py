@@ -1,4 +1,5 @@
 import csv
+import json
 import numpy as np
 from sklearn.preprocessing import LabelEncoder
 from sklearn.model_selection import train_test_split
@@ -25,6 +26,10 @@ images = images / 255.0
 
 label_encoder = LabelEncoder()
 encoded_labels = label_encoder.fit_transform(labels)
+label_mapping = list(label_encoder.classes_)
+
+with open('label_mapping.json', 'w') as json_file:
+    json.dump(label_mapping, json_file)
 
 x_train, x_temp, y_train, y_temp = train_test_split(images, encoded_labels, test_size=0.3, random_state=42)
 x_val, x_test, y_val, y_test = train_test_split(x_temp, y_temp, test_size=1/3, random_state=42)
